@@ -11,19 +11,25 @@ const url="http://localhost:3000/api/teddies";
 displayNumberOfArticles();
 
 //
+/* EVENT LISTENER */
+//
+
+document.getElementById('cross').addEventListener('click',emptyCart);
+
+//
 /* DEFINITIONS des fonctions */
 //
 
 /* FONCTION, sans paramètre, servant à afficher dans le menu de navigation le nombre d'articles sélectionnés par le client */
 function displayNumberOfArticles(){
     
+    let cartNode = document.getElementById("nav-cart");
+
     if (localStorage.getItem('numberOfArticles')){
-        console.log("Nombre d'articles à afficher:" + localStorage.getItem('numberOfArticles'));
-        document.getElementById("nav-cart").innerHTML='Mes articles <i class="fas fa-shopping-cart"></i> <span class="badge bg-secondary">'+ JSON.parse(localStorage.getItem('numberOfArticles')) +'</span>';
+        cartNode.innerHTML='Mes articles <i class="fas fa-shopping-cart"></i> <span class="badge bg-secondary">'+ JSON.parse(localStorage.getItem('numberOfArticles')) +'</span>';
     }
     else{
-        console.log('Pas encore de panier');
-        document.getElementById("nav-cart").innerHTML='Mes articles <i class="fas fa-shopping-cart"></i> <span class="badge bg-secondary">0</span>';
+        cartNode.innerHTML='Mes articles <i class="fas fa-shopping-cart"></i> <span class="badge bg-secondary">0</span>';
     }
     
 }
@@ -43,4 +49,18 @@ function addHtmlElement(tagName, attributes, classes) {
     element.className = classes;
 
     return element;
+}
+
+/* FONCTION de transformation d'un prix en centimes à un prix en unité avec 2 chiffres après la virgule */
+// Paramètre: [NOMBRE] Prix en centimes
+function displayPrice(priceInCents) {
+    let price = priceInCents / 100;
+    return price.toFixed(2).replace('.', ',');
+}
+
+/* FONCTION permettant de réinitialiser le panier d'articles sélectionné par le client */
+function emptyCart(){
+    localStorage.removeItem('numberOfArticles');
+    localStorage.removeItem('cart');
+    displayNumberOfArticles();
 }
