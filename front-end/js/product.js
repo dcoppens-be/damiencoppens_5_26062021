@@ -55,7 +55,7 @@ function displayLinks() {
 
     for (var i in JSON.parse(localStorage.getItem('panel'))) {
         let oneTeddy = JSON.parse(localStorage.getItem('panel'))[i];
-        let lien = panelNode.appendChild(addHtmlElement('a', {href: "product.html" + "?" + oneTeddy._id }, 'list-group-item list-group-item-action'));
+        let lien = panelNode.appendChild(addHtmlElement('a', {href: "product.html" + "?" + oneTeddy._id }, 'list-group-item list-group-item-action text-center'));
         lien.textContent = oneTeddy.name;
     }
 

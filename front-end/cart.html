@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <!-- METADONNEES DE LA PAGE WEB-->
+    <!-- Définition de l'encodage de ce fichier HTML-->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Définition de la largeur de la fenêtre du navigateur sur mobile, fixé ici à la largeur de l'écran -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Définition de la description-->
+    <meta name="description" content="Commandez facilement d'adorables ours en peluche fabriqués à la main. Personnalisez la couleur et faites-les livrer chez vous. Pour vous ou pour offrir, les doudous Orinoco sont des compagnons parfaits pour les petits comme les grands. Commandez vite, vous allez les adorer!" />
+    <!-- titre de la page HTLM apparaissant dans l'onglet du navigateur -->
+    <title>Orinoco - Votre panier, prêt pour la commande</title>
+
+     <!-- Liaison avec le(s) fichier(s) CSS -->
+    <!-- CSS Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+
+    <!-- Liaison avec le(s) fichier(s) JavaScript -->
+        <!-- JS FontAwesome -->
+        <script src="https://kit.fontawesome.com/44df1ab642.js" crossorigin="anonymous"></script>
+
+</head>
+<body>
+
+    <div class="container bg-secondary bg-gradient">
+
+        <header>
+            <nav class="row navbar navbar-dark bg-dark bg-gradient mb-3 px-3">
+                <div class="col-auto">
+                    <a class="navbar-brand" href="index.html">Orinoco</a>
+                </div>
+                <div class="col-auto border border-info bg-light p-2">
+                    <div class="row">
+                        <div class="col-auto">
+                            <a id="nav-cart" class="nav-link" href="cart.html">Mes articles <i class="fas fa-shopping-cart"></i></a>
+                        </div>
+                        <div class="col-auto">
+                            <button id="cross" type="button" class="btn btn-danger">X</button>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </header>
+
+
+        <section>
+            <h1> Votre Panier </h1>
+            <table class="bg-light table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>Nom</th>
+                        <th>Couleur</th>
+                        <th class="d-none d-md-block">Prix unitaire [&#8364]</th>
+                        <th>Quantité</th>
+                        <th class="d-none d-sm-block">Prix [&#8364]</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="productsList">
+                    
+                </tbody>
+            </table>
+
+            <p class="bg-info">Total du panier: <strong id="cartPrice">0</strong> <strong>&#8364</strong> </p>
+        
+
+            <div id="productsPicture" class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4"></div>
+
+
+            <h2> Vos données pour la commande </h2>
+            <form id="cartForm" class="row needs-validation m-3" novalidate>
+
+                <fieldset class="form-floating col-sm-6 mb-3">
+                    <input type="text" class="form-control" placeholder="Teddy" id="firstName" required minlegnth="2" maxlength="30"> <!-- pattern title autofocus -->
+                    <label class="form-label" for="firstName">Prénom</label>
+                    <div class="valid-feedback"></div>
+                    <div class="invalid-feedback"></div>
+                </fieldset>
+
+                <fieldset class="form-floating col-sm-6 mb-3">
+                    <input type="text" class="form-control" placeholder="Bear" id="lastName" required minlegnth="2" maxlength="30">
+                    <label class="form-label" for="lastName">Nom</label>
+                    <div class="valid-feedback"></div>
+                    <div class="invalid-feedback"></div>
+                </fieldset>
+
+                <fieldset class="form-floating col-sm-10 mb-3">
+                    <input type="text" class="form-control" placeholder="Rue des Nounours" id="address" required minlegnth="2"
+                        maxlength="60">
+                    <label class="form-label" for="address">Adresse</label>
+                    <div class="valid-feedback"></div>
+                    <div class="invalid-feedback"></div>
+                </fieldset>
+
+                <fieldset class="form-floating col-sm-2 mb-3">
+                    <input type="number" inputmode="numeric" class="form-control" placeholder="55" id="houseNumber" required minlegnth="1"
+                        maxlength="6">
+                    <label class="form-label" for="houseNumber">Numéro</label>
+                    <div class="valid-feedback"></div>
+                    <div class="invalid-feedback"></div>
+                </fieldset>
+
+                <fieldset class="form-floating mb-3">
+                    <input type="text" class="form-control" placeholder="..." id="addressInfo" minlegnth="1"
+                        maxlength="60">
+                    <label class="form-label" for="addressInfo">Complément d'adresse</label>
+                    <div class="valid-feedback"></div>
+                    <div class="invalid-feedback"></div>
+                </fieldset>
+
+                <fieldset class="form-floating col-sm-8 mb-3">
+                    <input type="text" class="form-control" placeholder="Doudou-ville" id="city" required minlegnth="2" maxlength="30">
+                    <label class="form-label" for="city">Ville</label>
+                    <div class="valid-feedback"></div>
+                    <div class="invalid-feedback"></div>
+                </fieldset>
+
+                <fieldset class="form-floating col-sm-4 mb-3">
+                    <input type="number" inputmode="numeric" class="form-control" placeholder="00000" id="zipCode" required minlegnth="5" maxlength="5">
+                    <label class="form-label" for="zipCode">Code postal</label>
+                    <div class="valid-feedback"></div>
+                    <div class="invalid-feedback"></div>
+                </fieldset>
+
+                <fieldset class="form-floating mb-3">
+                    <input type="email" class="form-control" placeholder="..." id="email" required>
+                    <label class="form-label" for="email">Email</label>
+                    <!-- <div class="valid-feedback"> Merci, </div> -->
+                    <div class="invalid-feedback"> L'adresse email indiquée n'est pas correcte. Merci de la corriger,</div>
+                </fieldset>
+
+                <fieldset class="form-check">
+                    <input class="form-check-input" type="checkbox" id="conditions" name="cg" value="accepted" required>
+                    <label class="form-check-label text-white" for="conditions">
+                        J'ai pris connaissance des <a href="#" class="text-white">conditions générales</a> et je les accepte.
+                    </label>
+                    <div class="invalid-feedback fwt-lighter fst-italic text-decoration-underline"> <a href="#">Il est nécessaire d'accepter les conditions générales pour valider votre commande.</a></div>
+                </fieldset>
+        
+                <div class="text-center mt-3">
+                    <button id="order" type="submit" class="btn btn-primary">Envoyer la commande</button>
+                </div>
+
+            </form>
+
+        </section>
+
+
+        <footer>
+            <div class="row bg-dark bg-gradient py-3">
+                <div class="col">
+                    <ul class="list-inline text-center">
+                        <li class="list-inline-item"> <a href="#">A propos</a> </li>
+                        <li class="list-inline-item"> <a href="#">Conditions d'utilisation</a> </li>
+                        <li class="list-inline-item"> <a href="#">Conditions générales</a> </li>
+                        <li class="list-inline-item"> <a href="#">FAQ</a> </li>
+                        <li class="list-inline-item"> <a href="#">Contactez nous</a> </li>
+                    </ul>
+                </div>
+            </div>
+        </footer>
+
+    </div>
+    
+    <!--JAVASCRIPT-->
+    <!-- Bundle Boostrap (own javascript plugins & Popper)-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+
+    <script src="js/functions.js" ></script>
+    <script src="js/cart.js" ></script>
+    
+    <noscript>Votre navigateur ne permet pas d'afficher le contenu dynamique de ce site, qui utilise JavaScript</noscript>
+
+
+</body>
+</html>
