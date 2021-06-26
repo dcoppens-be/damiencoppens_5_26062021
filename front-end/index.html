@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <!-- METADONNEES DE LA PAGE WEB-->
+    <!-- Définition de l'encodage de ce fichier HTML-->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Définition de la largeur de la fenêtre du navigateur sur mobile, fixé ici à la largeur de l'écran -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Définition de la description-->
+    <meta name="description" content="Commandez facilement d'adorables ours en peluche fabriqués à la main. Personnalisez la couleur et faites-les livrer chez vous. Pour vous ou pour offrir, les doudous Orinoco sont des compagnons parfaits pour les petits comme les grands. Commandez vite, vous allez les adorer!" />
+    <!-- titre de la page HTLM apparaissant dans l'onglet du navigateur -->
+    <title>Orinoco - Ours en peluche faits à la main</title>
+
+    <!-- Liaison avec le(s) fichier(s) CSS -->
+    <!-- CSS Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+
+    <!-- Liaison avec le(s) fichier(s) JavaScript -->
+        <!-- JS FontAwesome -->
+        <script src="https://kit.fontawesome.com/44df1ab642.js" crossorigin="anonymous"></script>
+
+</head>
+<body>
+
+    <div class="container bg-secondary bg-gradient">
+
+        <header>
+            <nav class="row navbar navbar-dark bg-dark bg-gradient mb-3">
+                <div class="col-auto">
+                    <a class="navbar-brand" href="#">Orinoco</a>
+                </div>
+                <div class="col-auto">
+                    <div class="row">
+                        <div class="col-auto">
+                            <a id="nav-cart" class="nav-link" href="../pages/cart.html">Mes articles <i class="fas fa-shopping-cart"></i></a>
+                        </div>
+                        <div class="col-auto">
+                            <button id="cross" type="button" class="btn btn-primary">X</button>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </header>
+
+        <section>
+            <h1 class="bg-light text-center fst-italic rounded-pill py-2 mb-3"> Bienvenue sur notre application d'achat, <br> dédiée aux ours en peluche <i class="fas fa-paw"></i> </h1>
+
+            <h2 class="bg-primary bg-gradient rounded p-3">Nos oursons fabriqués à la main <i class="fas fa-hand-sparkles"></i> </h2>
+            <div id="products" class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4 mb-3">
+                
+            </div>
+        </section>
+
+
+        <footer>
+            <div class="row bg-dark bg-gradient py-3">
+                <div class="col">
+                    <ul class="list-inline text-center">
+                        <li class="list-inline-item"> <a href="#">A propos</a> </li>
+                        <li class="list-inline-item"> <a href="#">Conditions d'utilisation</a> </li>
+                        <li class="list-inline-item"> <a href="#">Conditions générales</a> </li>
+                        <li class="list-inline-item"> <a href="#">FAQ</a> </li>
+                        <li class="list-inline-item"> <a href="#">Contactez nous</a> </li>
+                    </ul>
+                </div>
+            </div>
+        </footer>
+
+    </div>
+    
+    <!--JAVASCRIPT-->
+    <!-- Bundle Boostrap (own javascript plugins & Popper)-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+
+    <script src="js/functions.js" ></script>
+    <script src="js/index.js" ></script>
+    
+    <noscript>Votre navigateur ne permet pas d'afficher le contenu dynamique de ce site, qui utilise JavaScript</noscript>
+
+
+</body>
+</html>
