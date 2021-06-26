@@ -2,7 +2,7 @@
 MVP Orinoco
 # Orinoco #
 
-This is the back end server for Project 5 of the Junior Web Developer path.
+Première version du site Orinoco, e-commerce thématique.
 
 ### Prérequis ###
 
