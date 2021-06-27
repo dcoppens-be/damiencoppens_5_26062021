@@ -4,6 +4,7 @@
 
 const maskNames = new RegExp('^[a-zçéè]{1,}(([ ]*|[-]?)?[a-zçéè]{1,})*$','i');
 const maskEmail = new RegExp('^[ ]*[a-z0-9_\.\-]+@{1}[a-z0-9_\.\-]{2,}\.[a-z]{2,4}[ ]*$');
+const maskNumber = new RegExp('^[0-9]{1,6}$');
 const maskFrechZipCode = new RegExp('^[0-9]{5}$');
 
 //
@@ -29,16 +30,20 @@ displayTotalPrice();
 //
 
 /* Contrôle du comportement initial du formulaire*/
+document.getElementById("productsList").addEventListener('click',deleteItem);
 document.getElementById("cartForm").addEventListener('submit',function(e){
     e.preventDefault();
 })
 document.getElementById("firstName").addEventListener('input', function(){checkFormInput("firstName", maskNames)});
 document.getElementById("lastName").addEventListener('input', function(){checkFormInput("lastName", maskNames)});
 document.getElementById("address").addEventListener('input', function(){checkFormInput("address", maskNames)});
-
+document.getElementById("houseNumber").addEventListener('input', function(){checkFormInput("houseNumber", maskNumber)});
+//
 document.getElementById("city").addEventListener('input', function(){checkFormInput("city", maskNames)});
 document.getElementById("zipCode").addEventListener('input', function(){checkFormInput("zipCode", maskFrechZipCode)});
 document.getElementById("email").addEventListener('input', function(){checkFormInput("email", maskEmail)});
+
+document.getElementById("order").addEventListener('click', orderLaunch);
 
 //
 /* DEFINITIONS des fonctions */
@@ -58,7 +63,7 @@ function displayCart() {
             + "<td class=\"d-none d-md-block\">" + displayPrice(oneTeddy.price) + "</td>"
             + "<td>" + oneTeddy.quantity + "</td>"
             + "<td class=\"d-none d-sm-block\">" + displayPrice(oneTeddy.price * oneTeddy.quantity) + "</td>"
-            + "<td>" + "<button id=\"\" type=\"button\" class=\"btn btn-danger\">X</button>" + "</td>"
+            + "<td>" + "<button id=\"btn-"+ oneTeddy.name+oneTeddy.color +"\" type=\"button\" class=\"btn btn-danger delete\">X</button>" + "</td>"
             + "</tr>";
 
         let coloring;
@@ -77,14 +82,14 @@ function displayCart() {
         if (oneTeddy.name in colorsCheck) {
 
             colorsCheck[oneTeddy.name].push(oneTeddy.color);
-            document.getElementById('figcaption-' + oneTeddy.name).innerHTML += "<span class=\"badge border\" style=\"background-color:" + coloring + ";\"> </span>";
+            document.getElementById('figcaption-' + oneTeddy.name).innerHTML += "<span class=\"badge border\" style=\"background-color:" + coloring + ";\" id=\"badge-" + oneTeddy.name+oneTeddy.color + "\"> </span>";
         }
         else {
 
             document.getElementById('productsPicture').innerHTML +=
-                "<div class=\"col\"> <figure>"
+                "<div class=\"col\" id=\"figure-" + oneTeddy.name + "\"> <figure>"
                 + "<img src=\"" + oneTeddy.imageUrl + "\" class=\"img-fluid img-thumbnail figure-img\""
-                + "</figure> <figcaption class=\"text-white\" id=\"figcaption-" + oneTeddy.name + "\">" + oneTeddy.name + " <span class=\"badge border\" style=\"background-color:" + coloring + ";\"> </span></figcaption> </div>";
+                + "</figure> <figcaption class=\"text-white\" id=\"figcaption-" + oneTeddy.name + "\">" + oneTeddy.name + " <span class=\"badge border\" style=\"background-color:" + coloring + ";\" id=\"badge-" + oneTeddy.name+oneTeddy.color + "\"> </span></figcaption> </div>";
 
                 colorsCheck[oneTeddy.name] = [oneTeddy.color];
             //colorsCheck[oneTeddy.name] = ["<span class=\"badge\" style=\"background-color:" + oneTeddy.color + ";\"> </span>"];
@@ -115,12 +120,12 @@ function displayTotalPrice(){
 //          - [] masque RegExp
 // Réaction: 
 //          - modification de la classe du champ pour indiquer que l'entrée actuelle NE correspond PAS au modèle de la réponse attendue
-//          - modification de la classe du champ pour indiquer que l'entrée actuelle correspond au modèle de la réponse attednue */
+//          - modification de la classe du champ pour indiquer que l'entrée actuelle correspond au modèle de la réponse attednue
 function checkFormInput(id, mask) {
 
     // let mask = new RegExp('^[a-z]{1,}(([ ]*|[-]?)?[a-z]{1,})*$', 'i');
 
-    document.getElementById("cartForm").classList.remove("was-validated");
+    // document.getElementById("cartForm").classList.remove("was-validated");
 
     let value = document.getElementById(id).value;
 
@@ -132,5 +137,99 @@ function checkFormInput(id, mask) {
         document.getElementById(id).classList.remove("bg-success");
         document.getElementById(id).classList.add("bg-warning");
     }
+}
 
+
+/* Fonction de réaction à l'événement CLICK du bouton d'envoi de la commande */
+// Réaction: 
+//          - vérification que tous les champs obligatoires ont été remplis par l'utilisateur
+//          - traitement des entrées de l'utilisateur et sauvegarde dans l'objet contact au format attendu par l'API
+//          - traitement du contenu de la commande et sauvegarde dans le tableau products au format attendu par l'API
+//          - communication avec l'API et accès à la page de confirmation */
+function orderLaunch() {
+
+    if (document.getElementById("cartForm").checkValidity()) {
+        console.log("Les entrées du formulaires sont correctes et peuvent être traitées");
+
+        contact["firstName"] = document.getElementById("firstName").value;
+        contact["lastName"] = document.getElementById("lastName").value;
+        contact["address"] = document.getElementById("houseNumber").value + " " + document.getElementById("address").value + document.getElementById("addressInfo").value;
+        contact["city"] = document.getElementById("zipCode").value + " " + document.getElementById("city").value;
+        contact["email"] = document.getElementById("email").value;
+
+        console.log(contact);
+
+        fetch(url+'/'+'order',{
+            method:'POST',
+            headers:{'Accept':'application/json, text/plain, */*',
+            'Content-type':'application/json'},
+            body:JSON.stringify({"contact":contact,"products":products})
+        })
+            .then(function(response){
+                if(response.ok){
+                    return response.json();
+                    }
+                })
+                .then(function(value){
+                    console.log(value);
+                    console.log(value.orderId);
+                    localStorage.setItem('orderId', JSON.stringify(value.orderId));
+                    localStorage.setItem('totalPrice',JSON.stringify(totalPrice));
+                    alert("Merci pour votre commande, La référence de celle-ci est " + JSON.parse(localStorage.getItem('orderId')) + " . Pour un montant de " + displayPrice(JSON.parse(localStorage.getItem('totalPrice'))));
+                })
+                .catch(function(error){
+                    alert("Problème de récupération des données");
+                });
+    }
+    else {
+        alert("Au moins une donnée du formulaire est invalide et ne permet pas l'envoi de la commmande. Merci de vérifier vos entrées,");
+        console.log("Formulaire invalide");
+    }
+
+    document.getElementById("cartForm").classList.add("was-validated");
+
+};
+
+function deleteItem(element){
+    if (element.target.classList.contains('delete')){
+        console.log(element.target.id)
+        element.target.parentElement.parentElement.remove();
+
+        totalPrice = 0;
+        products=[];
+        let newCart = [];
+
+        for (var i in JSON.parse(localStorage.getItem('cart'))) {
+            let oneTeddyType = JSON.parse(localStorage.getItem('cart'))[i];
+            if (element.target.id==("btn-"+oneTeddyType.name+oneTeddyType.color)){
+                let newQuantity = JSON.parse(localStorage.getItem('numberOfArticles'))-oneTeddyType.quantity;
+                localStorage.setItem('numberOfArticles', JSON.stringify(newQuantity));
+                displayNumberOfArticles();
+                console.log(colorsCheck[oneTeddyType.name].length);
+                if (colorsCheck[oneTeddyType.name].length==1){
+                    document.getElementById('figure-' + oneTeddyType.name).remove();
+                    colorsCheck[oneTeddyType.name]=[];
+                }
+                else{
+                    document.getElementById("badge-" + oneTeddyType.name+oneTeddyType.color).remove();
+                    colorsCheck[oneTeddyType.name].pop();
+                }
+            }
+            else{
+                newCart.push(oneTeddyType);
+                totalPrice += oneTeddyType.price * oneTeddyType.quantity;
+                for (let j = 0; j < oneTeddyType.quantity; j++) {
+                    console.log(oneTeddyType._id);
+                    products.push(oneTeddyType._id);
+                    console.log(products);
+                }
+            }
+        }
+
+        console.log(newCart);
+        localStorage.setItem('cart', JSON.stringify(newCart));
+        displayTotalPrice();
+    }
+
+    
 }
