@@ -85,6 +85,7 @@ function getTeddyFromApi() {
             /* document.getElementById("main").removeChild(document.querySelector("h1")); */
 
             document.getElementById("figure-image").appendChild(addHtmlElement('img', { src: value.imageUrl}, 'img-fluid img-thumbnail figure-img'));
+            document.getElementById("figure-image").appendChild(addHtmlElement('figcaption', { id:"figure-description"}, 'figure-caption bg-light text-dark'));
 
             for (let i in value.colors) {
                 let option = document.getElementById("colorChoice").appendChild(addHtmlElement('option', { value: value.colors[i] },));

@@ -59,10 +59,10 @@ function displayCart() {
         document.getElementById('productsList').innerHTML +=
             "<tr>"
             + "<td>" + oneTeddy.name + "</td>"
-            + "<td>" + oneTeddy.color + "</td>"
-            + "<td class=\"d-none d-md-block\">" + displayPrice(oneTeddy.price) + "</td>"
-            + "<td>" + oneTeddy.quantity + "</td>"
-            + "<td class=\"d-none d-sm-block\">" + displayPrice(oneTeddy.price * oneTeddy.quantity) + "</td>"
+            + "<td class=\"text-center\">" + oneTeddy.color + "</td>"
+            + "<td class=\"d-none d-md-table-cell text-center\">" + displayPrice(oneTeddy.price) + "</td>"
+            + "<td class=\"text-center\">" + oneTeddy.quantity + "</td>"
+            + "<td class=\"d-none d-sm-table-cell\">" + displayPrice(oneTeddy.price * oneTeddy.quantity) + "</td>"
             + "<td>" + "<button id=\"btn-"+ oneTeddy.name+oneTeddy.color +"\" type=\"button\" class=\"btn btn-danger delete\">X</button>" + "</td>"
             + "</tr>";
 
@@ -148,6 +148,13 @@ function checkFormInput(id, mask) {
 //          - communication avec l'API et accès à la page de confirmation */
 function orderLaunch() {
 
+    if (JSON.parse(localStorage.getItem('numberOfArticles')) == 0){
+        alert("Merci d'ajouter au moins un produit au panier avant de lancer la commande. Choisissez votre ourson favoris et commandez-le. A tout de suite,");
+    }
+    else{
+
+    
+
     if (document.getElementById("cartForm").checkValidity()) {
         console.log("Les entrées du formulaires sont correctes et peuvent être traitées");
 
@@ -175,18 +182,21 @@ function orderLaunch() {
                     console.log(value.orderId);
                     localStorage.setItem('orderId', JSON.stringify(value.orderId));
                     localStorage.setItem('totalPrice',JSON.stringify(totalPrice));
-                    alert("Merci pour votre commande, La référence de celle-ci est " + JSON.parse(localStorage.getItem('orderId')) + " . Pour un montant de " + displayPrice(JSON.parse(localStorage.getItem('totalPrice'))));
+                    window.location.href = 'confirmation.html';
+                    //alert("Merci pour votre commande, La référence de celle-ci est " + JSON.parse(localStorage.getItem('orderId')) + " . Pour un montant de " + displayPrice(JSON.parse(localStorage.getItem('totalPrice'))));
+                    emptyCart();
                 })
                 .catch(function(error){
                     alert("Problème de récupération des données");
                 });
     }
     else {
-        alert("Au moins une donnée du formulaire est invalide et ne permet pas l'envoi de la commmande. Merci de vérifier vos entrées,");
+        alert("Au moins une donnée du formulaire est invalide ou incomplète et ne permet pas l'envoi de la commmande. Merci de vérifier vos entrées,");
         console.log("Formulaire invalide");
     }
-
     document.getElementById("cartForm").classList.add("was-validated");
+    }
+    
 
 };
 

@@ -37,7 +37,7 @@
                             <a id="nav-cart" class="nav-link" href="cart.html">Mes articles <i class="fas fa-shopping-cart"></i></a>
                         </div>
                         <div class="col-auto">
-                            <button id="cross" type="button" class="btn btn-danger">X</button>
+                            <a href="cart.html" id="cross" role="button" class="btn btn-danger">X</a>
                         </div>
                     </div>
                 </div>
@@ -51,11 +51,11 @@
                 <thead>
                     <tr>
                         <th>Nom</th>
-                        <th>Couleur</th>
-                        <th class="d-none d-md-block">Prix unitaire [&#8364]</th>
-                        <th>Quantité</th>
-                        <th class="d-none d-sm-block">Prix [&#8364]</th>
-                        <th>Action</th>
+                        <th class="text-center">Couleur</th>
+                        <th class="d-none d-md-table-cell text-center">Prix unitaire [&#8364;]</th>
+                        <th class="text-center">Quantité</th>
+                        <th class="d-none d-sm-table-cell">Prix [&#8364;]</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody id="productsList">
@@ -63,31 +63,32 @@
                 </tbody>
             </table>
 
-            <p class="bg-info">Total du panier: <strong id="cartPrice">0</strong> <strong>&#8364</strong> </p>
+            <p class="bg-info">Total du panier: <strong id="cartPrice">0</strong> <strong>&#8364;</strong> </p>
         
 
             <div id="productsPicture" class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4"></div>
 
+            <hr>
 
             <h2> Vos données pour la commande </h2>
             <form id="cartForm" class="row needs-validation m-3" novalidate>
 
                 <fieldset class="form-floating col-sm-6 mb-3">
-                    <input type="text" class="form-control" placeholder="Teddy" id="firstName" required minlegnth="2" maxlength="30"> <!-- pattern title autofocus -->
+                    <input type="text" class="form-control" placeholder="Teddy" id="firstName" required  maxlength="30"> <!-- pattern=".{2,30}" title autofocus -->
                     <label class="form-label" for="firstName">Prénom</label>
                     <div class="valid-feedback"></div>
                     <div class="invalid-feedback"></div>
                 </fieldset>
 
                 <fieldset class="form-floating col-sm-6 mb-3">
-                    <input type="text" class="form-control" placeholder="Bear" id="lastName" required minlegnth="2" maxlength="30">
+                    <input type="text" class="form-control" placeholder="Bear" id="lastName" required maxlength="30">
                     <label class="form-label" for="lastName">Nom</label>
                     <div class="valid-feedback"></div>
                     <div class="invalid-feedback"></div>
                 </fieldset>
 
                 <fieldset class="form-floating col-sm-10 mb-3">
-                    <input type="text" class="form-control" placeholder="Rue des Nounours" id="address" required minlegnth="2"
+                    <input type="text" class="form-control" placeholder="Rue des Nounours" id="address" required
                         maxlength="60">
                     <label class="form-label" for="address">Adresse</label>
                     <div class="valid-feedback"></div>
@@ -95,15 +96,15 @@
                 </fieldset>
 
                 <fieldset class="form-floating col-sm-2 mb-3">
-                    <input type="number" inputmode="numeric" class="form-control" placeholder="55" id="houseNumber" required minlegnth="1"
-                        maxlength="6">
+                    <input type="number" inputmode="numeric" class="form-control" placeholder="55" id="houseNumber" required
+                        max="999999">
                     <label class="form-label" for="houseNumber">Numéro</label>
                     <div class="valid-feedback"></div>
                     <div class="invalid-feedback"></div>
                 </fieldset>
 
                 <fieldset class="form-floating mb-3">
-                    <input type="text" class="form-control" placeholder="..." id="addressInfo" minlegnth="1"
+                    <input type="text" class="form-control" placeholder="..." id="addressInfo"
                         maxlength="60">
                     <label class="form-label" for="addressInfo">Complément d'adresse</label>
                     <div class="valid-feedback"></div>
@@ -111,14 +112,14 @@
                 </fieldset>
 
                 <fieldset class="form-floating col-sm-8 mb-3">
-                    <input type="text" class="form-control" placeholder="Doudou-ville" id="city" required minlegnth="2" maxlength="30">
+                    <input type="text" class="form-control" placeholder="Doudou-ville" id="city" required maxlength="30">
                     <label class="form-label" for="city">Ville</label>
                     <div class="valid-feedback"></div>
                     <div class="invalid-feedback"></div>
                 </fieldset>
 
                 <fieldset class="form-floating col-sm-4 mb-3">
-                    <input type="number" inputmode="numeric" class="form-control" placeholder="00000" id="zipCode" required minlegnth="5" maxlength="5">
+                    <input type="number" inputmode="numeric" class="form-control" placeholder="00000" id="zipCode" required min="01000" max="99999">
                     <label class="form-label" for="zipCode">Code postal</label>
                     <div class="valid-feedback"></div>
                     <div class="invalid-feedback"></div>
