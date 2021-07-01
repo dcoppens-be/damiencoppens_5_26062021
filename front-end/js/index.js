@@ -54,37 +54,13 @@ function newCard(product) {
 //              - [NODE] noeud HTML où doivent être ajoutées les cartes-produits 
 async function displayProducts(parentNode){
     
+    //console.log("j'attends");
     data = await getDataFromApi(url);
+    //console.log("je conclus");
 
     for(let i in data){
         parentNode.appendChild(newCard(data[i]));
         arrayOfTopProducts[i]={_id:data[i]._id, name:data[i].name};
     }
     localStorage.setItem('panel',JSON.stringify(arrayOfTopProducts));
-}
-
-/* FONCTION communiquant avec l'API pour récupérer l'ensemble des données des produits */
-// Paramètres: 
-//              - [STRING] url de l'API 
-function getDataFromApi(url) {
-    fetch(url)
-        .then(function (response) {
-            if (response.ok) {
-                return response.json();
-            }
-        })
-        .then(function(data){
-
-            /* A supprimer une fois la fonction displayProducts fonctionnelle */
-            for(let i in data){
-                document.getElementById('products').appendChild(newCard(data[i]));
-                arrayOfTopProducts[i]={_id:data[i]._id, name:data[i].name};
-            }
-            localStorage.setItem('panel',JSON.stringify(arrayOfTopProducts));
-
-            return data;
-        })
-        .catch(function(error){
-            alert("Problème de récupération des données depuis l'API");
-        })
 }

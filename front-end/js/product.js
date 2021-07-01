@@ -20,7 +20,8 @@ let currentQuantity=1;
 //
 
 displayLinks();
-getTeddyFromApi();
+//getTeddyFromApi();
+displayTeddy(id);
 
 //
 /* EVENT LISTENER */
@@ -64,44 +65,39 @@ function displayLinks() {
 /* FONCTION communiquant avec l'API pour récupérer les données du produit dont l'identifiant est spécifié dans l'URL */
 // Paramètres: 
 //              - [STRING] url de l'API avec l'identifiant du produit
-function getTeddyFromApi() {
-    
-    fetch(url + '/' + id, { method: 'GET' })
-        .then(function (response) {
-            if (response.ok) {
-                return response.json();
-            }
-        })
-        .then(function (value) {
-            
-            currentUnitPrice = value.price;
 
-            product["_id"] = value._id;
-            product["name"] = value.name;
-            product["price"] = value.price;
-            product["imageUrl"] = value.imageUrl;
+/* FONCTION d'affichage des informations du produit */
+// Paramètres: 
+//              - [NODE] noeud HTML où doivent être ajoutées les cartes-produits 
+async function displayTeddy(id) {
 
-            document.title = "L'ours " + value.name + " par Orinoco";
-            /* document.getElementById("main").removeChild(document.querySelector("h1")); */
+    //console.log("j'attends l'ours");
+    value = await getDataFromApi(url + '/' + id);
+    //console.log("je conclus l'ours");
 
-            document.getElementById("figure-image").appendChild(addHtmlElement('img', { src: value.imageUrl}, 'img-fluid img-thumbnail figure-img'));
-            document.getElementById("figure-image").appendChild(addHtmlElement('figcaption', { id:"figure-description"}, 'figure-caption bg-light text-dark'));
+    currentUnitPrice = value.price;
 
-            for (let i in value.colors) {
-                let option = document.getElementById("colorChoice").appendChild(addHtmlElement('option', { value: value.colors[i] },));
-                option.textContent = value.colors[i];
-            }
+    product["_id"] = value._id;
+    product["name"] = value.name;
+    product["price"] = value.price;
+    product["imageUrl"] = value.imageUrl;
 
-            document.getElementById('name').textContent = value.name;
-            document.getElementById('figure-description').textContent = value.description;
-            document.getElementById('price').textContent = displayPrice(value.price) + ' \u20AC';
-            document.getElementById('totalPrice').textContent = displayPrice(value.price * document.getElementById("quantityChoice").value) + ' \u20AC';
-            document.getElementById('_id').textContent = value._id;
+    document.title = "L'ours " + value.name + " par Orinoco";
+    /* document.getElementById("main").removeChild(document.querySelector("h1")); */
 
-        })
-        .catch(function (error) {
-            alert("Problème de récupération des données du produit depuis l'API");
-        });
+    document.getElementById("figure-image").appendChild(addHtmlElement('img', { src: value.imageUrl }, 'img-fluid img-thumbnail figure-img'));
+    document.getElementById("figure-image").appendChild(addHtmlElement('figcaption', { id: "figure-description" }, 'figure-caption bg-light text-dark'));
+
+    for (let i in value.colors) {
+        let option = document.getElementById("colorChoice").appendChild(addHtmlElement('option', { value: value.colors[i] },));
+        option.textContent = value.colors[i];
+    }
+
+    document.getElementById('name').textContent = value.name;
+    document.getElementById('figure-description').textContent = value.description;
+    document.getElementById('price').textContent = displayPrice(value.price) + ' \u20AC';
+    document.getElementById('totalPrice').textContent = displayPrice(value.price * document.getElementById("quantityChoice").value) + ' \u20AC';
+    document.getElementById('_id').textContent = value._id;
 
 }
 

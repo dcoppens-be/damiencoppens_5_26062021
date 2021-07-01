@@ -20,6 +20,24 @@ document.getElementById('cross').addEventListener('click',emptyCart);
 /* DEFINITIONS des fonctions */
 //
 
+/* FONCTION communiquant avec l'API pour récupérer l'ensemble des données des produits */
+// Paramètres: 
+//              - [STRING] url de l'API 
+function getDataFromApi(url) {
+    return fetch(url, { method: 'GET' })
+        .then(function (response) {
+            if (response.ok) {
+                return response.json();
+            }
+        })
+        .then(function(data){
+            return data;
+        })
+        .catch(function(error){
+            alert("Problème de récupération de données depuis l'API");
+        })
+}
+
 /* FONCTION, sans paramètre, servant à afficher dans le menu de navigation le nombre d'articles sélectionnés par le client */
 function displayNumberOfArticles(){
     
@@ -30,8 +48,7 @@ function displayNumberOfArticles(){
     }
     else{
         cartNode.innerHTML='Mes articles <i class="fas fa-shopping-cart"></i> <span class="badge bg-secondary">0</span>';
-    }
-    
+    }  
 }
 
 /* FONCTION de création d'élément HTLM */
