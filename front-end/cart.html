@@ -74,25 +74,25 @@
             <form id="cartForm" class="row needs-validation m-3" novalidate>
 
                 <fieldset class="form-floating col-sm-6 mb-3">
-                    <input type="text" class="form-control" placeholder="Teddy" id="firstName" required  maxlength="30"> <!-- pattern=".{2,30}" title autofocus -->
+                    <input type="text" class="form-control" placeholder="Teddy" id="firstName" required  maxlength="30" pattern="[a-zA-Zçéè]{1,}(([ ]*|[-']?)?[a-zA-Zçéè]{1,})*"> <!-- pattern=".{2,30}" title autofocus -->
                     <label class="form-label" for="firstName">Prénom</label>
                     <div class="valid-feedback"></div>
-                    <div class="invalid-feedback"></div>
+                    <div class="invalid-feedback bg-dark"></div>
                 </fieldset>
 
                 <fieldset class="form-floating col-sm-6 mb-3">
-                    <input type="text" class="form-control" placeholder="Bear" id="lastName" required maxlength="30">
+                    <input type="text" class="form-control" placeholder="Bear" id="lastName" required maxlength="30" pattern="[a-zA-Zçéè]{1,}(([ ]*|[-']?)?[a-zA-Zçéè]{1,})*">
                     <label class="form-label" for="lastName">Nom</label>
                     <div class="valid-feedback"></div>
-                    <div class="invalid-feedback"></div>
+                    <div class="invalid-feedback bg-dark"></div>
                 </fieldset>
 
                 <fieldset class="form-floating col-sm-10 mb-3">
                     <input type="text" class="form-control" placeholder="Rue des Nounours" id="address" required
-                        maxlength="60">
+                        maxlength="60" pattern="[a-zA-Zçéè]{1,}(([ ]*|[-']?)?[a-zA-Zçéè]{1,})*">
                     <label class="form-label" for="address">Adresse</label>
                     <div class="valid-feedback"></div>
-                    <div class="invalid-feedback"></div>
+                    <div class="invalid-feedback bg-dark"> Le nom de la voie ne doit contenir auncun chiffre. </div>
                 </fieldset>
 
                 <fieldset class="form-floating col-sm-2 mb-3">
@@ -100,7 +100,7 @@
                         max="999999">
                     <label class="form-label" for="houseNumber">Numéro</label>
                     <div class="valid-feedback"></div>
-                    <div class="invalid-feedback"></div>
+                    <div class="invalid-feedback bg-dark"> Le numéro du bâtiment ne peut contenir que des chiffres (max: 6).</div>
                 </fieldset>
 
                 <fieldset class="form-floating mb-3">
@@ -108,27 +108,27 @@
                         maxlength="60">
                     <label class="form-label" for="addressInfo">Complément d'adresse</label>
                     <div class="valid-feedback"></div>
-                    <div class="invalid-feedback"></div>
+                    <div class="invalid-feedback bg-dark"></div>
                 </fieldset>
 
                 <fieldset class="form-floating col-sm-8 mb-3">
                     <input type="text" class="form-control" placeholder="Doudou-ville" id="city" required maxlength="30">
                     <label class="form-label" for="city">Ville</label>
                     <div class="valid-feedback"></div>
-                    <div class="invalid-feedback"></div>
+                    <div class="invalid-feedback bg-dark"></div>
                 </fieldset>
 
                 <fieldset class="form-floating col-sm-4 mb-3">
                     <input type="number" inputmode="numeric" class="form-control" placeholder="00000" id="zipCode" required min="01000" max="99999">
                     <label class="form-label" for="zipCode">Code postal</label>
                     <div class="valid-feedback"></div>
-                    <div class="invalid-feedback"></div>
+                    <div class="invalid-feedback bg-dark"> Le code postale doit contenir 5 chiffres, mais peut commencer par un 0</div>
                 </fieldset>
 
                 <fieldset class="form-floating mb-3">
                     <input type="email" class="form-control" placeholder="..." id="email" required>
                     <label class="form-label" for="email">Email</label>
-                    <!-- <div class="valid-feedback"> Merci, </div> -->
+                    <div class="valid-feedback"></div>
                     <div class="invalid-feedback bg-dark"> L'adresse email indiquée n'est pas correcte. Merci de la corriger,</div>
                 </fieldset>
 

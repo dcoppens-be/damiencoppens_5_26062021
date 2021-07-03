@@ -10,7 +10,6 @@ let arrayOfTopProducts=[];
 /* APPEL de fonctions */
 //
 
-/* getDataFromApi(url); */
 displayProducts(document.getElementById('products'));
 
 //
@@ -49,14 +48,12 @@ function newCard(product) {
     return column;
 }
 
-/* FONCTION d'affichage des cartes produits */
+/* FONCTION d'affichage des cartes produits et de création d'un tableau de produit, dont les données sont utilisée sur la page product.html*/
 // Paramètres: 
 //              - [NODE] noeud HTML où doivent être ajoutées les cartes-produits 
 async function displayProducts(parentNode){
     
-    //console.log("j'attends");
     data = await getDataFromApi(url);
-    //console.log("je conclus");
 
     for(let i in data){
         parentNode.appendChild(newCard(data[i]));

@@ -20,7 +20,7 @@ document.getElementById('cross').addEventListener('click',emptyCart);
 /* DEFINITIONS des fonctions */
 //
 
-/* FONCTION communiquant avec l'API pour récupérer l'ensemble des données des produits */
+/* FONCTION communiquant avec l'API pour récupérer des données avec la méthode GET */
 // Paramètres: 
 //              - [STRING] url de l'API 
 function getDataFromApi(url) {

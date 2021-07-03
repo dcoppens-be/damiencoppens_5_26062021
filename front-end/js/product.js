@@ -19,9 +19,8 @@ let currentQuantity=1;
 /* APPEL de fonctions */
 //
 
-displayLinks();
-//getTeddyFromApi();
 displayTeddy(id);
+displayLinks();
 
 //
 /* EVENT LISTENER */
@@ -59,21 +58,14 @@ function displayLinks() {
         let lien = panelNode.appendChild(addHtmlElement('a', {href: "product.html" + "?" + oneTeddy._id }, 'list-group-item list-group-item-action text-center'));
         lien.textContent = oneTeddy.name;
     }
-
 }
-
-/* FONCTION communiquant avec l'API pour récupérer les données du produit dont l'identifiant est spécifié dans l'URL */
-// Paramètres: 
-//              - [STRING] url de l'API avec l'identifiant du produit
 
 /* FONCTION d'affichage des informations du produit */
 // Paramètres: 
-//              - [NODE] noeud HTML où doivent être ajoutées les cartes-produits 
+//              - [STRING] ID du produit 
 async function displayTeddy(id) {
 
-    //console.log("j'attends l'ours");
     value = await getDataFromApi(url + '/' + id);
-    //console.log("je conclus l'ours");
 
     currentUnitPrice = value.price;
 
@@ -103,8 +95,10 @@ async function displayTeddy(id) {
 
 /* Fonction de réaction à l'événement modificiaction de la quantité par l'utilisateur */
 /* Réaction: 
-            - conservation de la valeur affichée à 0 si l'utilisateur essaye d'insérer une valeur négative
-            - changement de l'item currentProductQuantity dans le localStorage */
+            - conservation de la valeur affichée à 1 si l'utilisateur essaye d'insérer une valeur négative
+            - affichage de la valeur maximale de 10 si l'utilisateur essaye de dépasser ce maximum
+            - mise-à-jour de la variable currentQuantity et de l'information 'quantity' de l'objet PRODUCT
+            - mise-à-jour du prix total affiché */
 function updateQuantity(){
 
     let value = document.getElementById("quantityChoice").value;
@@ -123,25 +117,23 @@ function updateQuantity(){
 
     document.getElementById('totalPrice').textContent=displayPrice(currentUnitPrice*currentQuantity)+' \u20AC';
     product["quantity"]=currentQuantity;
-    console.log(product);
 }
 
 /* Fonction de réaction à l'événement modificiaction du choix de couleur par l'utilisateur */
-/* Réaction: changement de l'item COLOR dans le localStorage*/
+/* Réaction: changement de l'information 'color' de l'objet PRODUCT */
 function updateColor(){
 
     let value = document.getElementById("colorChoice").value;
 
-    console.log(product);
     product["color"]=value;
-    console.log(product);
 }
 
 /* Fonction de réaction à l'événement CLICK du bouton d'ajout au panier */
 /* Réaction: 
-            - conservation de la valeur affichée à 0 si l'utilisateur essaye d'insérer une valeur négative
-            - mise à jour de la quantité d'articles dans le localStorage 
-            - affichage de la nouvelle quantité pour le badge associé au panier dans le menu navigation */
+            - lancement d'une alerte si aucune couleur n'a été choisie pour le produit
+            - stockage de la quantité d'articles dans le localStorage 
+            - affichage de la nouvelle quantité pour le badge associé au panier dans le menu navigation 
+            - ajout des informations du produit ajouté au panier dans le localStorage */
 function updateCart(){
 
     if (product["color"] == 'default') {
@@ -162,45 +154,35 @@ function updateCart(){
         localStorage.setItem('numberOfArticles', JSON.stringify(quantity));
         displayNumberOfArticles();
 
+        // Cas avec un panier déjà existant
         if (localStorage.getItem('cart')) {
-            console.log('Produit additionnel ajouté au panier')
-            console.log(product);
+            
             let productsTable = JSON.parse(localStorage.getItem('cart'));
 
-            let cartCheck = 0;
+            let teddyAlreadyInCart = 0;
 
             for (var i in productsTable) {
+                // Si le produit (type et couleur) existe déjà dans le panier, mise-à-jour de la quantité
                 if (productsTable[i].name == product.name && productsTable[i].color == product.color) {
                     
-                    console.log('Ce produit existe déjà dans le panier');
-                    console.log(typeof JSON.parse(localStorage.getItem('cart'))[i].quantity);
-                    console.log(typeof product.quantity);
                     productsTable[i].quantity += product.quantity;
                     localStorage.setItem('cart', JSON.stringify(productsTable));
 
-                    cartCheck = 1;
+                    teddyAlreadyInCart = 1;
                 }
             }
 
-            if (cartCheck == 0) {
+            // Si le produit (type et couleur) n'existe pas encore dans le panier, ajout du produit
+            if (teddyAlreadyInCart == 0) {
 
                 productsTable[productsTable.length] = product;
                 localStorage.setItem('cart', JSON.stringify(productsTable));
-                console.log(localStorage.getItem('cart'));
-                console.log(JSON.parse(localStorage.getItem('cart')));
-            }
-            
+            }  
         }
+
+        // Cas du premier produit ajouté au panier
         else {
-            console.log('Premier produit ajouté au panier')
-            console.log(product);
             localStorage.setItem('cart', JSON.stringify([product]));
-            console.log(localStorage.getItem('cart'));
-            console.log(JSON.parse(localStorage.getItem('cart')));
         }
-
     }
-
-    console.log(localStorage.getItem('cart'));
-
-};
+}
